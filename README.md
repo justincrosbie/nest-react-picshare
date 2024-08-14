@@ -69,7 +69,8 @@ This will build both the backend and frontend.
 To start the NestJS backend, run:
 
 ```bash
-npm run start:backend
+cd backend
+npm run start
 ```
 
 The backend will be available at `http://localhost:3000`.
@@ -79,7 +80,8 @@ The backend will be available at `http://localhost:3000`.
 To start the React frontend, run:
 
 ```bash
-npm run start:frontend
+cd frontend
+npm run start
 ```
 
 The frontend will be available at `http://localhost:3001`.
