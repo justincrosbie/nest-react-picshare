@@ -18,6 +18,7 @@ WORKDIR /app
 
 # Copy the build output from the previous stage
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/public ./public
 COPY --from=builder /app/node_modules ./node_modules
 
 # Expose the port NestJS will run on

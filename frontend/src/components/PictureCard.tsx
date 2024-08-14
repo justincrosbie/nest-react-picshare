@@ -6,7 +6,7 @@ interface User {
     id: number;
     username: string;
 }
-  
+
 interface PictureCardProps {
   id: number;
   title: string;
@@ -22,8 +22,8 @@ interface PictureCardProps {
 const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat('en-GB').format(date); // DD/MM/YYYY format
-  };
-  
+};
+
 const PictureCard: React.FC<PictureCardProps> = ({
   id,
   title,
@@ -35,33 +35,47 @@ const PictureCard: React.FC<PictureCardProps> = ({
   onFavoriteToggle,
   onImageClick,
 }) => {
-
-    return (
-        <Card
-          hoverable
-          cover={<img alt={title} src={url} onClick={() => onImageClick(id)} />}
-          actions={[]}
-        >
-          <Card.Meta
-            title={title}
-            description={
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
-                  <div>{user?.username}</div>
-                  <div style={{ fontSize: '12px', color: 'gray' }}>{formatDate(createdAt)}</div>
-                </div>
-                {isLoggedIn && (
-                  isFavorite ? (
-                    <HeartFilled style={{ color: 'red' }} onClick={() => onFavoriteToggle(id)} />
-                  ) : (
-                    <HeartOutlined onClick={() => onFavoriteToggle(id)} />
-                  )
-                )}
-              </div>
-            }
+  return (
+    <Card
+      hoverable
+      style={{ width: 240 }}
+      cover={
+        <div style={{ padding: '10px' }}>
+          <img 
+            alt={title} 
+            src={url} 
+            onClick={() => onImageClick(id)} 
+            style={{ 
+              width: '100%', 
+              height: 'auto', 
+              maxHeight: '200px', 
+              objectFit: 'contain' 
+            }} 
           />
-        </Card>
-      );
-    };
-    
+        </div>
+      }
+      actions={[]}
+    >
+      <Card.Meta
+        title={title}
+        description={
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <div>{user?.username}</div>
+              <div style={{ fontSize: '12px', color: 'gray' }}>{formatDate(createdAt)}</div>
+            </div>
+            {isLoggedIn && (
+              isFavorite ? (
+                <HeartFilled style={{ color: 'red' }} onClick={() => onFavoriteToggle(id)} />
+              ) : (
+                <HeartOutlined onClick={() => onFavoriteToggle(id)} />
+              )
+            )}
+          </div>
+        }
+      />
+    </Card>
+  );
+};
+
 export default PictureCard;
