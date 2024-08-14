@@ -34,7 +34,7 @@ const PictureCard: React.FC<PictureCardProps> = ({
   return (
     <Card
       hoverable
-      style={{ width: 340, height: 440 }}
+      style={{ width: 300, height: 440 }}
       cover={
         <div style={{ padding: '10px' }}>
           <img 

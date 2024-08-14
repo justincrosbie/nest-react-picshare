@@ -93,31 +93,18 @@ const Home: React.FC = () => {
           <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
         }
       >
-<Row gutter={[16, 16]} justify="center">
-  {pictures.map(picture => (
-    <Col xs={24} sm={12} md={8} lg={6} key={picture.id}>
-      <PictureCard
-        {...picture}
-        isLoggedIn={!!user}
-        onFavoriteToggle={handleFavoriteToggle}
-        onImageClick={() => setSelectedPicture(picture)}
-      />
-    </Col>
-  ))}
-</Row>
-
-        <Row gutter={[16, 16]}>
+        <Row gutter={[16, 16]} justify="center">
           {pictures.map(picture => (
-          <Col xs={24} sm={12} md={8} lg={6} key={picture.id}>
-            <PictureCard
-              {...picture}
-              isLoggedIn={!!user}
-              onFavoriteToggle={handleFavoriteToggle}
-              onImageClick={() => setSelectedPicture(picture)}
-            />
-          </Col>
-        ))}
-      </Row>
+            <Col xs={24} sm={12} md={8} lg={6} key={picture.id}>
+              <PictureCard
+                {...picture}
+                isLoggedIn={!!user}
+                onFavoriteToggle={handleFavoriteToggle}
+                onImageClick={() => setSelectedPicture(picture)}
+              />
+            </Col>
+          ))}
+        </Row>
       </InfiniteScroll>
 
       {selectedPicture && (

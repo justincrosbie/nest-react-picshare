@@ -17,8 +17,14 @@ const ImageModal: React.FC<ImageModalProps> = ({ visible, imageUrl, title, onClo
       footer={null}
       onCancel={onClose}
       width="80%"
-      bodyStyle={{ backgroundColor: '#000' }} // Set the background color of the modal content to black
-      style={{ top: 20 }}
+      bodyStyle={{ backgroundColor: '#000', border: 'none' }} // Remove border from the modal content
+      style={{
+        top: 20,
+        backgroundColor: '#000',
+        color: '#fff',
+        border: 'none', // Remove the border from the modal itself
+        boxShadow: 'none', // Remove shadow if present
+      }}
       closeIcon={<CloseOutlined style={{ color: '#fff' }} />} // Set the close icon color to white
     >
       <div style={{ textAlign: 'center' }}>
