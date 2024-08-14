@@ -30,11 +30,39 @@ export class PicturesService {
     limit: number = 10,
   ): Promise<[Picture[], number]> {
     return this.picturesRepository.findAndCount({
-      relations: ['user', 'favorites'],
+      relations: ['user'],
       order: { createdAt: 'DESC' },
       take: limit,
       skip: (page - 1) * limit,
     });
+  }
+
+  async getAllPicturesWithUser(
+    userId: number, // Add userId as a parameter
+    page: number = 1,
+    limit: number = 10,
+  ): Promise<[Picture[], number]> {
+    const [pictures, count] = await this.picturesRepository.findAndCount({
+      relations: ['user'],
+      order: { createdAt: 'DESC' },
+      take: limit,
+      skip: (page - 1) * limit,
+    });
+
+    const transformedPictures = await Promise.all(
+      pictures.map(async (picture) => {
+        const isFavorite = await this.favoritesRepository.findOne({
+          where: { picture: { id: picture.id }, user: { id: userId } },
+        });
+
+        return {
+          ...picture,
+          isFavorite: !!isFavorite, // Convert the result to a boolean
+        };
+      }),
+    );
+
+    return [transformedPictures, count];
   }
 
   async getFavorites(userId: number): Promise<Picture[]> {
