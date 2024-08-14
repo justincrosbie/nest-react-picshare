@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Row, Col, message, Spin, Alert } from 'antd';
 import PictureCard from '../components/PictureCard';
 import ImageModal from '../components/ImageModal';
@@ -7,6 +7,7 @@ import { getPictures, getPicturesSecure, toggleFavorite } from '../services/api'
 import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { formatDate } from '../utils/formatDate';
 
 const Home: React.FC = () => {
   const [pictures, setPictures] = useState<Picture[]>([]);
@@ -54,7 +55,7 @@ const Home: React.FC = () => {
   );
 
   return (
-    <div style={{ padding: '24px', height: '100vh' }}>
+    <div style={{ padding: '84px', height: '100vh' }}>
       <Spin spinning={loading && page === 1} tip="Loading pictures..."/>
 
       {!user &&
@@ -123,7 +124,7 @@ const Home: React.FC = () => {
         <ImageModal
           visible={!!selectedPicture}
           imageUrl={selectedPicture.url}
-          title={selectedPicture.title}
+          title={selectedPicture.title + ' ' + formatDate(selectedPicture.createdAt)}
           onClose={() => setSelectedPicture(null)}
         />
       )}

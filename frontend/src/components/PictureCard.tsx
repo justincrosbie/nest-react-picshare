@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from 'antd';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
+import { formatDate } from '../utils/formatDate';
 
 interface User {
     id: number;
@@ -19,11 +20,6 @@ interface PictureCardProps {
   onImageClick: (id: number) => void;
 }
 
-const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('en-GB').format(date); // DD/MM/YYYY format
-};
-
 const PictureCard: React.FC<PictureCardProps> = ({
   id,
   title,
@@ -38,7 +34,7 @@ const PictureCard: React.FC<PictureCardProps> = ({
   return (
     <Card
       hoverable
-      style={{ width: 240 }}
+      style={{ width: 340, height: 440 }}
       cover={
         <div style={{ padding: '10px' }}>
           <img 
@@ -48,7 +44,7 @@ const PictureCard: React.FC<PictureCardProps> = ({
             style={{ 
               width: '100%', 
               height: 'auto', 
-              maxHeight: '200px', 
+              maxHeight: '300px', 
               objectFit: 'contain' 
             }} 
           />

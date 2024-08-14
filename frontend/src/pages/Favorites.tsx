@@ -45,7 +45,7 @@ const Favorites: React.FC = () => {
 
       <Spin spinning={loading} tip="Loading pictures..."/>
 
-      <h2>Your Favorites</h2>
+      <h2>Your saved pictures</h2>
       <Row gutter={[16, 16]}>
         {favorites.map(picture => (
           <Col xs={24} sm={12} md={8} lg={6} key={picture.id}>
