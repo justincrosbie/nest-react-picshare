@@ -26,13 +26,13 @@ api.interceptors.request.use(
   }
 );
 
-export const getPictures = async () => {
-  const response = await api.get('/pictures');
+export const getPictures = async (pageNumber: number) => {
+  const response = await api.get('/pictures?page=' + pageNumber);
   return response.data[0];
 };
 
-export const getPicturesSecure = async () => {
-  const response = await api.get('/pictures/secure');
+export const getPicturesSecure = async (pageNumber: number) => {
+  const response = await api.get('/pictures/secure?page=' + pageNumber);
   return response.data[0];
 };
 

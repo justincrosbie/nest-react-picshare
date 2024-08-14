@@ -15,6 +15,7 @@ const headerStyle: React.CSSProperties = {
     paddingInline: 48,
     lineHeight: '64px',
     backgroundColor: '#fff',
+    color: '#000',
   };
 
   const logoStyle: React.CSSProperties = {
@@ -36,7 +37,7 @@ const AppHeader: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
-  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   const menuItems = [
     { key: '/', label: 'Home', onClick: () => navigate('/') },
@@ -57,7 +58,9 @@ const AppHeader: React.FC = () => {
     <Row justify="space-between" align="middle" style={{ width: '100%' }}>
       <Col>
         <div className="logo" style={logoStyle}>
-          <Link to="/">PicShare</Link>
+          <Link to="/">
+              <span style={{ color: 'black' }}>PicShare</span>
+          </Link>
         </div>
     </Col>
     <Col>
@@ -77,7 +80,8 @@ const AppHeader: React.FC = () => {
         >
           Share Pic
         </Button>
-        <Button onClick={logout}>Log Out</Button>
+        Hi {user?.username}
+        <Button type="link" onClick={logout}>Log out</Button>
       </Col>
     </Row>
   );
@@ -86,7 +90,9 @@ const AppHeader: React.FC = () => {
     <Row justify="space-between" align="middle" style={{ width: '100%' }}>
       <Col>
         <div className="logo">
-          <Link to="/">PicShare</Link>
+          <Link to="/">
+              <span style={{ color: 'black' }}>PicShare</span>
+          </Link>
         </div>
       </Col>
       <Col>
@@ -128,8 +134,10 @@ const AppHeader: React.FC = () => {
       ) : (
         <Row justify="space-between" align="middle" style={{ width: '100%' }}>
           <Col>
-            <div className="logo">
-              <Link to="/">PicShare</Link>
+            <div className="logo" style={logoStyle}>
+                <Link to="/">
+                  <span style={{ color: 'black' }}>PicShare</span>
+                </Link>
             </div>
           </Col>
           <Col>

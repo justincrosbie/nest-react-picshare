@@ -10,7 +10,7 @@ interface User {
 interface PictureCardProps {
   id: number;
   title: string;
-  user?: User;
+  user?: User | undefined;
   createdAt: string;
   url: string;
   isFavorite: boolean;
@@ -19,6 +19,11 @@ interface PictureCardProps {
   onImageClick: (id: number) => void;
 }
 
+const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('en-GB').format(date); // DD/MM/YYYY format
+  };
+  
 const PictureCard: React.FC<PictureCardProps> = ({
   id,
   title,
@@ -31,23 +36,32 @@ const PictureCard: React.FC<PictureCardProps> = ({
   onImageClick,
 }) => {
 
-  const subtitle = `${user?.username} ${createdAt}`;
-
-  return (
-    <Card
-      hoverable
-      cover={<img alt={title} src={url} onClick={() => onImageClick(id)} />}
-      actions={[
-        isFavorite ? (
-          isLoggedIn && <HeartFilled style={{color: 'red'}} key="favorite" onClick={() => onFavoriteToggle(id)} />
-        ) : (
-            isLoggedIn && <HeartOutlined key="favorite" onClick={() => onFavoriteToggle(id)} />
-        ),
-      ]}
-    >
-      <Card.Meta title={title} description={subtitle} />
-    </Card>
-  );
-};
-
+    return (
+        <Card
+          hoverable
+          cover={<img alt={title} src={url} onClick={() => onImageClick(id)} />}
+          actions={[]}
+        >
+          <Card.Meta
+            title={title}
+            description={
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
+                  <div>{user?.username}</div>
+                  <div style={{ fontSize: '12px', color: 'gray' }}>{formatDate(createdAt)}</div>
+                </div>
+                {isLoggedIn && (
+                  isFavorite ? (
+                    <HeartFilled style={{ color: 'red' }} onClick={() => onFavoriteToggle(id)} />
+                  ) : (
+                    <HeartOutlined onClick={() => onFavoriteToggle(id)} />
+                  )
+                )}
+              </div>
+            }
+          />
+        </Card>
+      );
+    };
+    
 export default PictureCard;

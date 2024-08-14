@@ -41,7 +41,7 @@ const Favorites: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: '24px' }}>
+    <div style={{ padding: '24px', height: '100vh' }}>
 
       <Spin spinning={loading} tip="Loading pictures..."/>
 
@@ -51,6 +51,8 @@ const Favorites: React.FC = () => {
           <Col xs={24} sm={12} md={8} lg={6} key={picture.id}>
             <PictureCard
               {...picture}
+              user={user ? user : undefined}
+              isFavorite={true}
               isLoggedIn={!!user}
               onFavoriteToggle={handleFavoriteToggle}
               onImageClick={() => setSelectedPicture(picture)}

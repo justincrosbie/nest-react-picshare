@@ -9,5 +9,4 @@ export const theme = {
       medium: '16px',
       large: '20px',
     },
-    // Add more theme variables as needed
   };
