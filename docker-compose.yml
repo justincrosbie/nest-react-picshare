@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: picshare_user
+      POSTGRES_PASSWORD: your_password
+      POSTGRES_DB: picshare_database
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: picshare_user
+      DB_PASSWORD: your_password
+      DB_NAME: picshare_database
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "8080:80"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  pgdata:
