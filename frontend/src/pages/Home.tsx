@@ -94,10 +94,9 @@ const Home: React.FC = () => {
 
       <br/>
 
-      <Row gutter={[16, 16]} justify={'center'}>
+      <Row gutter={[0, 16]} justify={'center'}>
           {pictures.map(picture => (
-            <Col key={picture.id} flex={1} style={{ maxWidth: 300, margin: '0px 12px' }}
-            >
+            <Col key={picture.id} flex={1} style={{ maxWidth: 300, margin: '0px 12px' }}>
               <PictureCard
                 {...picture}
                 isLoggedIn={!!user}
