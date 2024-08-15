@@ -7,6 +7,7 @@ import { getPictures, getPicturesSecure, toggleFavorite } from '../services/api'
 import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../utils/formatDate';
+import { usePictureContext } from '../contexts/PictureContext';
 
 const Home: React.FC = () => {
   const [pictures, setPictures] = useState<Picture[]>([]);
@@ -14,6 +15,7 @@ const Home: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(2); // Initial load fetches page 1, so start at 2
   const { user } = useAuth();
+  const { onPictureAdded } = usePictureContext();
 
   const fetchPictures = useCallback(async (pageNumber: number) => {
     setLoading(true);
@@ -29,13 +31,16 @@ const Home: React.FC = () => {
   }, [user]);
 
   useEffect(() => {
-    fetchPictures(1); // Fetch the first page directly
-  }, []);
+    setPictures([]); // Clear the pictures
+    fetchPictures(1); // Re-fetch pictures when `refreshPictures` changes
+  }, [onPictureAdded]);
+
 
   const fetchMorePictures = useCallback(async () => {
     fetchPictures(page);
     setPage(prevPage => prevPage + 1);
   }, [fetchPictures, page]);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -92,7 +97,7 @@ const Home: React.FC = () => {
       <Row gutter={[16, 16]} justify={'center'}>
           {pictures.map(picture => (
             <Col key={picture.id} flex={1} style={{ maxWidth: 300, margin: '0px 12px' }}
-  >
+            >
               <PictureCard
                 {...picture}
                 isLoggedIn={!!user}

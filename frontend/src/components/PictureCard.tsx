@@ -4,8 +4,8 @@ import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { formatDate } from '../utils/formatDate';
 
 interface User {
-    id: number;
-    username: string;
+  id: number;
+  username: string;
 }
 
 interface PictureCardProps {
@@ -36,11 +36,22 @@ const PictureCard: React.FC<PictureCardProps> = ({
       hoverable
       style={{ 
         width: 300, 
-        height: 440 ,
+        height: 440,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
         boxShadow: '0 8px 16px rgba(0, 0, 0, 0.05)', // Deeper drop shadow
       }}
       cover={
-        <div style={{ padding: '10px' }}>
+        <div 
+          style={{ 
+            padding: '10px', 
+            flexGrow: 1, // Ensure the image container grows to fill available space
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
           <img 
             alt={title} 
             src={url} 
@@ -57,7 +68,9 @@ const PictureCard: React.FC<PictureCardProps> = ({
       actions={[]}
     >
       <Card.Meta
-        title={title}
+        title={
+          <div style={{ textAlign: 'center' }}>{title}</div> // Center justify the title
+        }
         description={
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>

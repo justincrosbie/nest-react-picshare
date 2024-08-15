@@ -4,40 +4,44 @@ import { MenuOutlined } from '@ant-design/icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { useAuth } from '../contexts/AuthContext';
+import AddPictureModal from '../components/AddPictureModal';
+import { usePictureContext } from '../contexts/PictureContext';
 
 const { Header } = Layout;
 
 type TextAlign = 'left' | 'right' | 'center' | 'justify';
 
 const headerStyle: React.CSSProperties = {
-    textAlign: 'center',
-    height: 64,
-    paddingInline: 48,
-    lineHeight: '64px',
-    backgroundColor: '#fff',
-    color: '#000',
-  };
+  textAlign: 'center',
+  height: 64,
+  paddingInline: 48,
+  lineHeight: '64px',
+  backgroundColor: '#fff',
+  color: '#000',
+};
 
-  const logoStyle: React.CSSProperties = {
-      width: '134px',
-      height: '35px',    
-      fontFamily: 'Roboto Serif',
-      fontStyle: 'normal',
-      fontWeight: '600',
-      fontSize: '30px',
-      lineHeight: '35px',
-      display: 'flex',
-      alignItems: 'center',
-      textAlign: 'center' as TextAlign,
-      color: '#000000',
-  };
+const logoStyle: React.CSSProperties = {
+  width: '134px',
+  height: '35px',
+  fontFamily: 'Roboto Serif',
+  fontStyle: 'normal',
+  fontWeight: '600',
+  fontSize: '30px',
+  lineHeight: '35px',
+  display: 'flex',
+  alignItems: 'center',
+  textAlign: 'center' as TextAlign,
+  color: '#000000',
+};
 
 const AppHeader: React.FC = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
+  const [addPictureModalVisible, setAddPictureModalVisible] = useState(false); // Manage modal visibility
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+  const { onPictureAdded } = usePictureContext();
 
   const menuItems = [
     { key: '/', label: 'Home', onClick: () => navigate('/') },
@@ -59,13 +63,13 @@ const AppHeader: React.FC = () => {
       <Col>
         <div className="logo" style={logoStyle}>
           <Link to="/">
-              <span style={{ color: 'black' }}>PicShare</span>
+            <span style={{ color: 'black' }}>PicShare</span>
           </Link>
         </div>
-    </Col>
-    <Col>
-        <Menu 
-          mode="horizontal" 
+      </Col>
+      <Col>
+        <Menu
+          mode="horizontal"
           selectedKeys={[location.pathname]}
           style={{ flex: 1, minWidth: 0 }}
         >
@@ -73,15 +77,19 @@ const AppHeader: React.FC = () => {
         </Menu>
       </Col>
       <Col>
-        <Button 
-          type="primary" 
-          style={{ marginRight: '10px' }}
-          onClick={() => navigate('/add-picture')}
-        >
-          Share Pic
-        </Button>
-        Hi {user?.username}
-        <Button type="link" onClick={logout}>Log out</Button>
+        {user && (
+          <>
+            <Button
+              type="primary"
+              style={{ marginRight: '10px' }}
+              onClick={() => setAddPictureModalVisible(true)} // Show the modal
+            >
+              Share Pic
+            </Button>
+            Hi {user?.username}
+            <Button type="link" onClick={logout}>Log out</Button>
+          </>
+        )}
       </Col>
     </Row>
   );
@@ -91,14 +99,14 @@ const AppHeader: React.FC = () => {
       <Col>
         <div className="logo" style={logoStyle}>
           <Link to="/">
-              <span style={{ color: 'black' }}>PicShare</span>
+            <span style={{ color: 'black' }}>PicShare</span>
           </Link>
         </div>
       </Col>
       <Col>
-        <Button 
-          type="text" 
-          icon={<MenuOutlined />} 
+        <Button
+          type="text"
+          icon={<MenuOutlined />}
           onClick={() => setMobileMenuVisible(true)}
         />
       </Col>
@@ -119,7 +127,7 @@ const AppHeader: React.FC = () => {
             >
               <Menu mode="vertical" selectedKeys={[location.pathname]}>
                 {renderMenuItems()}
-                <Menu.Item key="add-picture" onClick={() => navigate('/add-picture')}>
+                <Menu.Item key="add-picture" onClick={() => setAddPictureModalVisible(true)}>
                   Share Pic
                 </Menu.Item>
                 <Menu.Item key="logout" onClick={logout}>
@@ -135,9 +143,9 @@ const AppHeader: React.FC = () => {
         <Row justify="space-between" align="middle" style={{ width: '100%' }}>
           <Col>
             <div className="logo" style={logoStyle}>
-                <Link to="/">
-                  <span style={{ color: 'black' }}>PicShare</span>
-                </Link>
+              <Link to="/">
+                <span style={{ color: 'black' }}>PicShare</span>
+              </Link>
             </div>
           </Col>
           <Col>
@@ -145,6 +153,12 @@ const AppHeader: React.FC = () => {
           </Col>
         </Row>
       )}
+
+      <AddPictureModal
+        visible={addPictureModalVisible}
+        onClose={() => setAddPictureModalVisible(false)}
+        onPictureAdded={onPictureAdded} // Refresh the list of pictures when a picture is added
+      />
     </Header>
   );
 };

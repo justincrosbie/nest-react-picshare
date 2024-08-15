@@ -6,7 +6,7 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Favorites from './pages/Favorites';
-import AddPicture from './pages/AddPicture';
+import { PictureProvider } from './contexts/PictureContext';
 
 const { Content } = Layout;
 
@@ -15,15 +15,16 @@ const App: React.FC = () => {
     <AuthProvider>
       <Router>
         <Layout>
-          <Header />
-          <Content style={{ padding: '0 50px', marginTop: 64 }}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/favorites" element={<Favorites />} />
-              <Route path="/add-picture" element={<AddPicture />} />
-            </Routes>
-          </Content>
+          <PictureProvider>
+            <Header />
+            <Content style={{ padding: '0 50px', marginTop: 64 }}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/favorites" element={<Favorites />} />
+              </Routes>
+            </Content>
+            </PictureProvider>
         </Layout>
       </Router>
     </AuthProvider>
