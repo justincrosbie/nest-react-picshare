@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
+import './ImageModal.css';
 
 interface ImageModalProps {
   visible: boolean;
@@ -17,14 +18,15 @@ const ImageModal: React.FC<ImageModalProps> = ({ visible, imageUrl, title, onClo
       footer={null}
       onCancel={onClose}
       width="80%"
-      bodyStyle={{ backgroundColor: '#000', border: 'none' }} // Remove border from the modal content
+      bodyStyle={{ backgroundColor: '#000' }} // Set the background color of the modal content to black
       style={{
         top: 20,
         backgroundColor: '#000',
         color: '#fff',
         border: 'none', // Remove the border from the modal itself
-        boxShadow: 'none', // Remove shadow if present
+        boxShadow: 'none', // Remove any shadow if present
       }}
+      className='custom-modal' // Add a custom class to the modal
       closeIcon={<CloseOutlined style={{ color: '#fff' }} />} // Set the close icon color to white
     >
       <div style={{ textAlign: 'center' }}>
