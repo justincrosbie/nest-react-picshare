@@ -107,6 +107,7 @@ export class PicturesService {
     return this.picturesRepository
       .createQueryBuilder('picture')
       .innerJoin('picture.favorites', 'favorite')
+      .leftJoinAndSelect('picture.user', 'user') // Join the user entity and select it
       .where('favorite.user.id = :userId', { userId })
       .getMany();
   }

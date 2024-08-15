@@ -5,6 +5,7 @@ import ImageModal from '../components/ImageModal';
 import { Picture } from '../interfaces/picture';
 import { getFavorites, toggleFavorite } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
+import { formatDate } from '../utils/formatDate';
 
 const Favorites: React.FC = () => {
   const [favorites, setFavorites] = useState<Picture[]>([]);
@@ -64,7 +65,7 @@ const Favorites: React.FC = () => {
         <ImageModal
           visible={!!selectedPicture}
           imageUrl={selectedPicture.url}
-          title={selectedPicture.title}
+          title={selectedPicture.user?.username + ' ' + formatDate(selectedPicture.createdAt)}
           onClose={() => setSelectedPicture(null)}
         />
       )}

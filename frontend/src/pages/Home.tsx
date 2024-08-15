@@ -112,7 +112,7 @@ const Home: React.FC = () => {
         <ImageModal
           visible={!!selectedPicture}
           imageUrl={selectedPicture.url}
-          title={selectedPicture.title + ' ' + formatDate(selectedPicture.createdAt)}
+          title={selectedPicture.user?.username + ' ' + formatDate(selectedPicture.createdAt)}
           onClose={() => setSelectedPicture(null)}
         />
       )}
