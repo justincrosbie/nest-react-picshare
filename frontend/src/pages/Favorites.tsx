@@ -41,12 +41,12 @@ const Favorites: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: '24px', height: '100vh' }}>
+    <div style={{ height: '100vh' }}>
 
       <Spin spinning={loading} tip="Loading pictures..."/>
 
       <h2>Your saved pictures</h2>
-      <Row gutter={[16, 16]}>
+      <Row gutter={[16, 16]} justify="center">
         {favorites.map(picture => (
           <Col xs={24} sm={12} md={8} lg={6} key={picture.id}>
             <PictureCard

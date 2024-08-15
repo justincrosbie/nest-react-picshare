@@ -89,7 +89,7 @@ const AppHeader: React.FC = () => {
   const renderMobileMenu = () => (
     <Row justify="space-between" align="middle" style={{ width: '100%' }}>
       <Col>
-        <div className="logo">
+        <div className="logo" style={logoStyle}>
           <Link to="/">
               <span style={{ color: 'black' }}>PicShare</span>
           </Link>
@@ -97,7 +97,7 @@ const AppHeader: React.FC = () => {
       </Col>
       <Col>
         <Button 
-          type="primary" 
+          type="text" 
           icon={<MenuOutlined />} 
           onClick={() => setMobileMenuVisible(true)}
         />

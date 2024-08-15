@@ -34,7 +34,11 @@ const PictureCard: React.FC<PictureCardProps> = ({
   return (
     <Card
       hoverable
-      style={{ width: 300, height: 440 }}
+      style={{ 
+        width: 300, 
+        height: 440 ,
+        boxShadow: '0 8px 16px rgba(0, 0, 0, 0.05)', // Deeper drop shadow
+      }}
       cover={
         <div style={{ padding: '10px' }}>
           <img 
