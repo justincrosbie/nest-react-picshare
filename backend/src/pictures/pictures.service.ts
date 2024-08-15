@@ -5,10 +5,19 @@ import { Picture } from './picture.entity';
 import { Favorite } from './favourite.entity';
 import { User } from '../users/user.entity';
 
+/**
+ * PicturesService handles the business logic related to pictures, including creation, retrieval, and favorite toggling.
+ */
 @Injectable()
 export class PicturesService {
   private readonly logger = new Logger(PicturesService.name);
 
+  /**
+   * Constructs an instance of PicturesService.
+   *
+   * @param picturesRepository - The repository for managing Picture entities.
+   * @param favoritesRepository - The repository for managing Favorite entities.
+   */
   constructor(
     @InjectRepository(Picture)
     private picturesRepository: Repository<Picture>,
@@ -16,6 +25,14 @@ export class PicturesService {
     private favoritesRepository: Repository<Favorite>,
   ) {}
 
+  /**
+   * Creates a new picture and saves it to the database.
+   *
+   * @param title - The title of the picture.
+   * @param url - The URL of the picture.
+   * @param user - The user associated with the picture.
+   * @returns The newly created picture.
+   */
   async createPicture(
     title: string,
     url: string,
@@ -25,6 +42,13 @@ export class PicturesService {
     return this.picturesRepository.save(picture);
   }
 
+  /**
+   * Retrieves all pictures with pagination, ordered by creation date in descending order.
+   *
+   * @param page - The page number to retrieve (default is 1).
+   * @param limit - The number of pictures per page (default is 10).
+   * @returns A tuple containing an array of pictures and the total count of pictures.
+   */
   async getAllPictures(
     page: number = 1,
     limit: number = 10,
@@ -37,8 +61,16 @@ export class PicturesService {
     });
   }
 
+  /**
+   * Retrieves all pictures with pagination and includes a flag indicating if each picture is a favorite of the specified user.
+   *
+   * @param userId - The ID of the user to check for favorites.
+   * @param page - The page number to retrieve (default is 1).
+   * @param limit - The number of pictures per page (default is 10).
+   * @returns A tuple containing an array of pictures with a favorite flag and the total count of pictures.
+   */
   async getAllPicturesWithUser(
-    userId: number, // Add userId as a parameter
+    userId: number,
     page: number = 1,
     limit: number = 10,
   ): Promise<[Picture[], number]> {
@@ -65,6 +97,12 @@ export class PicturesService {
     return [transformedPictures, count];
   }
 
+  /**
+   * Retrieves all pictures that the specified user has marked as favorites.
+   *
+   * @param userId - The ID of the user whose favorite pictures are to be retrieved.
+   * @returns An array of the user's favorite pictures.
+   */
   async getFavorites(userId: number): Promise<Picture[]> {
     return this.picturesRepository
       .createQueryBuilder('picture')
@@ -73,6 +111,15 @@ export class PicturesService {
       .getMany();
   }
 
+  /**
+   * Toggles the favorite status of a picture for a specified user.
+   * If the picture is already a favorite, it is removed from the user's favorites.
+   * If the picture is not a favorite, it is added to the user's favorites.
+   *
+   * @param pictureId - The ID of the picture to toggle.
+   * @param userId - The ID of the user who is toggling the favorite status.
+   * @throws NotFoundException if the picture is not found.
+   */
   async toggleFavorite(pictureId: number, userId: number): Promise<void> {
     const picture = await this.picturesRepository.findOne({
       where: { id: pictureId },
