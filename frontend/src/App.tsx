@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Favorites from './pages/Favorites';
 import { PictureProvider } from './contexts/PictureContext';
+import './App.css';
 
 const { Content } = Layout;
 

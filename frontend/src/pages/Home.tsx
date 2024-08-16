@@ -78,19 +78,20 @@ const Home: React.FC = () => {
 
   return (
     <div style={{ height: '100vh' }}>
-      <Spin spinning={loading && page === 1} tip="Loading pictures..."/>
 
-      {!user &&
-        <Alert message={alertMessage} 
-        type="info"
-        style={{
-          backgroundColor: '#f0f0f0', // Light grey background
-          border: 'none', // Remove border
-          textAlign: 'center', // Center the text
-          color: '#595959', // Grey text color
-        }}
-        />
-      }
+        <Spin spinning={loading && page === 1} tip="Loading pictures..."/>
+
+        {!user &&
+          <Alert message={alertMessage} 
+            type="info"
+          style={{
+            backgroundColor: '#f0f0f0', // Light grey background
+            border: 'none', // Remove border
+            textAlign: 'center', // Center the text
+            color: '#595959', // Grey text color
+          }}
+          />
+        }
 
       <br/>
 
